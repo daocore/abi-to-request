@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+
+public/js
+public/html
+public/img
+__tests__/
+CHANGELOG.md
+src/
+tsconfig.json
+
+.DS_Store
+*.js.map
