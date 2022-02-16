@@ -14,7 +14,11 @@
     "name": "牧麟子",
     "email": "qianduanxinlv@163.com"
   },
-  "homepage": "https://github.com/SatoshiHsiang/uniquedao-sdk/tree/main/packages/abi-to-request",
+  "repository": {
+    "url": "git@github.com:SatoshiHsiang/abi-to-request.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/SatoshiHsiang/abi-to-request",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {

@@ -2,18 +2,24 @@ import { useEffect, createContext, ReactNode, useState, useContext, Dispatch } f
 import Web3 from "web3";
 import { AbiItem } from 'web3-utils';
 import { ContractInterface, ethers } from "ethers"
-import { TContract } from "./request";
-import { Dictionary } from "lodash";
-import { isEmpty, filter } from "lodash";
+import { Dictionary, isEmpty, filter } from "lodash";
+import { Contract } from 'web3-eth-contract';
+import { IHandleRequest } from "../request";
 
-export const ContractRequestContext = createContext(
-    {} as {
-        contracts?: Dictionary<TContract>;
-        setContracts: Dispatch<React.SetStateAction<Dictionary<TContract> | undefined>>;
-    },
-);
+export type TEthersContract = ethers.Contract;
+export type TWeb3Contract = Contract;
 
-export const useContractRequest = () => useContext(ContractRequestContext);
+export type TContract = (TEthersContract | TWeb3Contract) & { sendAccount: string }
+
+type TContractRequestContext<K> = {
+    contracts: Dictionary<TContract>;
+    setContracts: Dispatch<React.SetStateAction<Dictionary<TContract>>>;
+    transactionHook?: IHandleRequest<K>
+}
+
+export const ContractRequestContext = createContext({});
+
+export const useContractRequest = <K,>() => useContext(ContractRequestContext) as TContractRequestContext<K>;
 
 export type TLibrary = Web3 | ethers.providers.JsonRpcProvider | ethers.providers.Web3Provider | ethers.providers.InfuraProvider | undefined
 export type TAbiItem = {
@@ -28,8 +34,18 @@ export type TAbiItem = {
 
 export type TAbisData = { contractList: Dictionary<string>, abis: TAbiItem[] }
 
-export const ContractRequestContextProvider = ({ children, library, abis }: { children: ReactNode, library: Web3 | ethers.providers.JsonRpcProvider | ethers.providers.Web3Provider | ethers.providers.InfuraProvider | undefined, abis: TAbiItem[] }) => {
-    const [contracts, setContracts] = useState<{ [key in string]?: TContract }>({});
+export const ContractRequestContextProvider = <T,>({
+    children,
+    library,
+    abis,
+    transactionHook
+}: {
+    children: ReactNode,
+    library: Web3 | ethers.providers.JsonRpcProvider | ethers.providers.Web3Provider | ethers.providers.InfuraProvider | undefined,
+    abis: TAbiItem[],
+    transactionHook?: Omit<IHandleRequest<T>, "isGlobalTransactionHookValid">
+}) => {
+    const [contracts, setContracts] = useState<{ [key in string]: TContract }>({});
     const [networkId, setNetworkId] = useState<number>();
 
     const getContract = async (library: TLibrary, contractInfo: TAbiItem) => {
@@ -60,10 +76,18 @@ export const ContractRequestContextProvider = ({ children, library, abis }: { ch
     }
 
     const getContracts = async (library: TLibrary, abis: TAbiItem[]) => {
-        const contracts = {};
+        const contracts: { [key in string]: TContract } = {};
+        let sendAccounts: string[] = []
+        if (library instanceof Web3) {
+            sendAccounts = await library?.eth.getAccounts()
+        }
+
         for (let i = 0; i < abis.length; i++) {
             const contract = await getContract(library, abis[i])
-            contracts[abis[i].contractName] = contract
+            if (contract) {
+                (contract as TContract).sendAccount = sendAccounts[0] || ""
+                contracts[abis[i].contractName] = contract as TContract
+            }
         }
         setContracts(contracts)
     }
@@ -101,7 +125,7 @@ export const ContractRequestContextProvider = ({ children, library, abis }: { ch
     }, [library, abis, networkId])
 
     return (
-        <ContractRequestContext.Provider value={{ contracts, setContracts }}>
+        <ContractRequestContext.Provider value={{ contracts, setContracts, transactionHook }}>
             {children}
         </ContractRequestContext.Provider>
     )
