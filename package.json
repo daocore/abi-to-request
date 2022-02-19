@@ -1,6 +1,6 @@
 {
   "name": "abi-to-request",
-  "version": "0.0.33",
+  "version": "0.0.35",
   "description": "Convert smart contract ABI file to react request file",
   "keywords": [
     "contract",
@@ -43,6 +43,7 @@
     "react-dom": "^17.0.2",
     "web3": "^1.7.0",
     "web3-eth-contract": "^1.7.0",
+    "web3-core": "^1.7.0",
     "web3modal": "^1.9.5"
   },
   "gitHead": "450c6a984760a7c39bef4f3d526bf192ff16646a",

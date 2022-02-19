@@ -1,4 +1,4 @@
-import { useEffect, createContext, ReactNode, useState, useContext, Dispatch } from "react";
+import { useEffect, createContext, ReactNode, useState, useContext, Dispatch, useMemo } from "react";
 import Web3 from "web3";
 import { AbiItem } from 'web3-utils';
 import { ContractInterface, ethers } from "ethers"
@@ -28,7 +28,7 @@ export type TAbiItem = {
     networkId?: string | number,
     chainId?: string | number,
     address?: string,
-    frame: "truffle" | "hardhat",
+    frame: "truffle" | "hardhat" | "general",
     netName?: string
 }
 
@@ -42,11 +42,12 @@ export const ContractRequestContextProvider = <T,>({
 }: {
     children: ReactNode,
     library: Web3 | ethers.providers.JsonRpcProvider | ethers.providers.Web3Provider | ethers.providers.InfuraProvider | undefined,
-    abis: TAbiItem[],
+    abis?: TAbiItem[],
     transactionHook?: Omit<IHandleRequest<T>, "isGlobalTransactionHookValid">
 }) => {
     const [contracts, setContracts] = useState<{ [key in string]: TContract }>({});
     const [networkId, setNetworkId] = useState<number>();
+    const abisData: TAbiItem[] = useMemo(() => isEmpty(abis) || !abis ? require("./abis") : abis, [abis])
 
     const getContract = async (library: TLibrary, contractInfo: TAbiItem) => {
         try {
@@ -75,18 +76,18 @@ export const ContractRequestContextProvider = <T,>({
         }
     }
 
-    const getContracts = async (library: TLibrary, abis: TAbiItem[]) => {
+    const getContracts = async (library: TLibrary, abisFilter: TAbiItem[]) => {
         const contracts: { [key in string]: TContract } = {};
         let sendAccounts: string[] = []
         if (library instanceof Web3) {
             sendAccounts = await library?.eth.getAccounts()
         }
 
-        for (let i = 0; i < abis.length; i++) {
-            const contract = await getContract(library, abis[i])
+        for (let i = 0; i < abisFilter.length; i++) {
+            const contract = await getContract(library, abisFilter[i])
             if (contract) {
                 (contract as TContract).sendAccount = sendAccounts[0] || ""
-                contracts[abis[i].contractName] = contract as TContract
+                contracts[abisFilter[i].contractName] = contract as TContract
             }
         }
         setContracts(contracts)
@@ -119,10 +120,10 @@ export const ContractRequestContextProvider = <T,>({
     }, [library])
 
     useEffect(() => {
-        if (!library || isEmpty(abis) || !networkId) return
-        const abisFilter = filter(abis, item => Number(item.chainId || item.networkId) === Number(networkId))
+        if (!library || isEmpty(abisData) || !networkId) return
+        const abisFilter = filter(abisData, item => Number(item.chainId || item.networkId) === Number(networkId))
         getContracts(library, abisFilter)
-    }, [library, abis, networkId])
+    }, [library, abisData, networkId])
 
     return (
         <ContractRequestContext.Provider value={{ contracts, setContracts, transactionHook }}>
