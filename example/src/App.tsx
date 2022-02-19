@@ -1,47 +1,40 @@
+import logo from './logo.svg';
 import './App.css';
-import { ContractRequestContextProvider, useWeb3Info, Web3InfoProvider } from 'abi-to-request';
-import { Loading, LoadingProvider } from './component/Loading';
-import * as React from "react";
+import React, { useEffect } from 'react';
+import { ContractRequestContextProvider } from "abi-to-request"
+import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 
-export const Example = () => {
-  const { library } = useWeb3Info()
-  if (!library) return (
-    <div>
-      请链接钱包并切换到 Ropsten 测试网
-    </div>
-  )
+const Example = () => {
+  /* const { library } = useWeb3Info()
+  useEffect(() => {
+    console.log(library)
+  }, [library]) */
 
   return (
-    <ContractRequestContextProvider library={library}>
-      <LoadingProvider>
-        <div className="App">
-          <header className="App-header">
-            <img src={require('./logo.svg')} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </header>
-          <Example />
-        </div>
-        <Loading />
-      </LoadingProvider>
-    </ContractRequestContextProvider>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
-};
+}
 
 const App = () => {
   return (
-    <Web3InfoProvider>
-      <Example />
-    </Web3InfoProvider>
+    <ContractRequestContextProvider library={{} as any}>
+        <Example />
+    </ContractRequestContextProvider>
   );
 }
 

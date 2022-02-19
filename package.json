@@ -30,25 +30,24 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "tsc": "tsc",
-    "prepublish": "npm run tsc"
+    "tsc": "tsc"
   },
   "dependencies": {
     "@types/lodash": "^4.14.178",
-    "@types/react": "^17.0.39",
     "@walletconnect/web3-provider": "^1.7.1",
     "async": "^3.2.3",
     "ethers": "^5.5.3",
     "lodash": "^4.17.21",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "web3": "^1.7.0",
     "web3-eth-contract": "^1.7.0",
     "web3-core": "^1.7.0",
     "web3modal": "^1.9.5"
   },
-  "gitHead": "450c6a984760a7c39bef4f3d526bf192ff16646a",
   "devDependencies": {
     "typescript": "^4.5.5"
+  },
+  "peerDependencies": {
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
   }
 }
