@@ -1,6 +1,6 @@
 {
   "name": "abi-to-request",
-  "version": "0.0.35",
+  "version": "0.0.37",
   "description": "Convert smart contract ABI file to react request file",
   "keywords": [
     "contract",
@@ -30,7 +30,8 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "prepublish": "npm run tsc"
   },
   "dependencies": {
     "@types/lodash": "^4.14.178",
