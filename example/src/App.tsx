@@ -1,14 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { useEffect } from 'react';
-import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useContractRequest, useRequest, useImmediateReadContractRequest } from "../.."
+import React, { useEffect, useState } from 'react';
+import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useRequest, useImmediateReadContractRequest } from "../.."
 import { abis } from "./client/abis"
 import { SimpleTokenAbis_BalanceOf, SimpleTokenAbis_Decimals, SimpleTokenAbis_Symbol } from './client/SimpleTokenAbis';
 import { Loading, LoadingProvider, useLoading } from './component/Loading';
+import { map } from 'lodash';
+import { ContractCard } from './component/Contract';
 
 const A = () => {
-  const { contracts } = useContractRequest()
-  const { address, networkId } = useWeb3Info()
+  const { address } = useWeb3Info()
   const [getBalanceOf, balanceOf] = useRequest(SimpleTokenAbis_BalanceOf)
 
   const [symbol] = useImmediateReadContractRequest(SimpleTokenAbis_Symbol)
@@ -19,11 +19,11 @@ const A = () => {
   }, [Decimals, symbol, balanceOf])
 
   useEffect(() => {
-    if (!address) return
-    getBalanceOf({
-      account: address
-    })
-  }, [address, networkId])
+    for (let i in abis) {
+      console.log(abis[i])
+    }
+  }, [])
+
   return <button onClick={() => {
     address && getBalanceOf({
       account: address
@@ -34,6 +34,7 @@ const A = () => {
 const Example = () => {
   const web3Info = useWeb3Info()
   const { openLoading, closeDelayLoading } = useLoading()
+  const [select, setSelect] = useState(Number(window.location.hash.slice(1, window.location.hash.length)) || 0)
 
   return (
     <ContractRequestContextProvider
@@ -43,22 +44,44 @@ const Example = () => {
         onSuccessBefore: () => {
           openLoading && openLoading()
         },
-        onFinish: () => {
+        onFinish: (res) => {
           closeDelayLoading && closeDelayLoading()
+          console.log(res)
         }
       }}
     >
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <button onClick={() => {
-            web3Info.toConnect && web3Info.toConnect()
-          }}>connect</button>
-          <A />
-        </header>
+      <div>
+        <div style={{ display: 'flex' }}>
+          <div style={{
+            width: 400,
+            display: 'flex',
+            flexDirection: "column",
+            height: "100vh",
+            overflowY: "auto",
+            borderRight: "1px solid rgba(225,225,225, 0.9)"
+          }}>
+            {
+              map(abis, (item, index) => <ContractCard
+                select={select}
+                index={index}
+                data={item}
+                key={index}
+                setSelect={setSelect}
+              />)
+            }
+          </div>
+          <div style={{
+            padding: "20px",
+            width: "calc(100% - 400px)"
+          }}>
+            {
+              <div>{select}</div>
+            }
+          </div>
+        </div>
         <Loading />
-      </div>
-    </ContractRequestContextProvider>
+      </div >
+    </ContractRequestContextProvider >
   );
 }
 
