@@ -688,7 +688,8 @@
       }
     ],
     "chains": {
-      "137": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+      "137": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+      "3": "0xaD6D458402F60fD3Bd25163575031ACDce07538D"
     }
   }
 ]

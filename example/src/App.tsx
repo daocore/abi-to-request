@@ -1,33 +1,46 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useEffect } from 'react';
-import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useContractRequest, useRequest, useImmediateReadContractRequest } from "../../src"
+import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useContractRequest, useRequest, useImmediateReadContractRequest } from "../../lib"
 import { abis } from "./client/abis"
-import { SimpleToken_Decimals, SimpleToken_Symbol } from './client/SimpleToken';
+import { SimpleTokenAbis_BalanceOf, SimpleTokenAbis_Decimals, SimpleTokenAbis_Symbol } from './client/SimpleTokenAbis';
 
 const A = () => {
   const { contracts } = useContractRequest()
-  const [decimals] = useImmediateReadContractRequest(SimpleToken_Symbol, {
+  const { address, networkId } = useWeb3Info()
+  const [decimals, balance] = useRequest(SimpleTokenAbis_BalanceOf, {
+    onSuccess: (res)=>{
+      console.log(res)
+    },
     onFail: (res)=>{
       console.log(res)
-    }
+    },
   })
 
+
   useEffect(() => {
-    console.log(decimals)
-  }, [decimals])
+    console.log(contracts)
+  }, [contracts])
+
+  useEffect(() => {
+    console.log(address)
+    if(!address) return
+    decimals({
+      account: address
+    })
+  }, [address, contracts, networkId])
   return null
 }
 
 const Example = () => {
-  const { library, toConnect } = useWeb3Info()
+  const web3Info = useWeb3Info()
 
   useEffect(() => {
-    console.log(library)
-  }, [library])
+    console.log(web3Info)
+  }, [web3Info.connected])
 
   return (
-    <ContractRequestContextProvider library={library} abis={abis}>
+    <ContractRequestContextProvider library={web3Info.library} abis={abis}>
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -42,7 +55,9 @@ const Example = () => {
           >
             Learn React
         </a>
-        <button onClick={toConnect}>connect</button>
+        <button onClick={()=>{
+          web3Info.toConnect && web3Info.toConnect()
+        }}>connect</button>
         <A />
         </header>
       </div>
@@ -52,7 +67,7 @@ const Example = () => {
 
 const App = () => {
   return (
-    <Web3InfoProvider defaultNetwork={"https://matic-mainnet.chainstacklabs.com"}>
+    <Web3InfoProvider defaultNetwork={"ropsten"}>
       <Example />
     </Web3InfoProvider>
   );
