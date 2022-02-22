@@ -4,61 +4,59 @@ import React, { useEffect } from 'react';
 import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useContractRequest, useRequest, useImmediateReadContractRequest } from "../.."
 import { abis } from "./client/abis"
 import { SimpleTokenAbis_BalanceOf, SimpleTokenAbis_Decimals, SimpleTokenAbis_Symbol } from './client/SimpleTokenAbis';
+import { Loading, LoadingProvider, useLoading } from './component/Loading';
 
 const A = () => {
   const { contracts } = useContractRequest()
   const { address, networkId } = useWeb3Info()
-  const [decimals, balance] = useRequest(SimpleTokenAbis_BalanceOf, {
-    onSuccess: (res)=>{
-      console.log(res)
-    },
-    onFail: (res)=>{
-      console.log(res)
-    },
-  })
+  const [getBalanceOf, balanceOf] = useRequest(SimpleTokenAbis_BalanceOf)
+
+  const [symbol] = useImmediateReadContractRequest(SimpleTokenAbis_Symbol)
+  const [Decimals] = useImmediateReadContractRequest(SimpleTokenAbis_Decimals)
 
   useEffect(() => {
-    console.log(contracts)
-  }, [contracts])
+    console.log(Decimals, symbol, balanceOf)
+  }, [Decimals, symbol, balanceOf])
 
   useEffect(() => {
-    console.log(address)
-    if(!address) return
-    decimals({
+    if (!address) return
+    getBalanceOf({
       account: address
     })
-  }, [address, contracts, networkId])
-  return null
+  }, [address, networkId])
+  return <button onClick={() => {
+    address && getBalanceOf({
+      account: address
+    })
+  }}>balacne</button>
 }
 
 const Example = () => {
   const web3Info = useWeb3Info()
-
-  useEffect(() => {
-    console.log(web3Info)
-  }, [web3Info.connected])
+  const { openLoading, closeDelayLoading } = useLoading()
 
   return (
-    <ContractRequestContextProvider library={web3Info.library} abis={abis}>
+    <ContractRequestContextProvider
+      library={web3Info.library}
+      abis={abis}
+      transactionHook={{
+        onSuccessBefore: () => {
+          openLoading && openLoading()
+        },
+        onFinish: () => {
+          closeDelayLoading && closeDelayLoading()
+        }
+      }}
+    >
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-        </a>
-        <button onClick={()=>{
-          web3Info.toConnect && web3Info.toConnect()
-        }}>connect</button>
-        <A />
+          <button onClick={() => {
+            web3Info.toConnect && web3Info.toConnect()
+          }}>connect</button>
+          <A />
         </header>
+        <Loading />
       </div>
     </ContractRequestContextProvider>
   );
@@ -67,7 +65,9 @@ const Example = () => {
 const App = () => {
   return (
     <Web3InfoProvider defaultNetwork={"ropsten"}>
-      <Example />
+      <LoadingProvider>
+        <Example />
+      </LoadingProvider>
     </Web3InfoProvider>
   );
 }
