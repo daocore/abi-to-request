@@ -5,7 +5,7 @@ import { TransactionReceipt } from 'web3-core';
 import { ethers } from "ethers";
 
 //view
-export const SimpleToken_DEFAULT_ADMIN_ROLE = async (
+export const SimpleTokenAbis_DEFAULT_ADMIN_ROLE = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -18,7 +18,7 @@ export const SimpleToken_DEFAULT_ADMIN_ROLE = async (
 }
 
 //view
-export const SimpleToken_INITIAL_SUPPLY = async (
+export const SimpleTokenAbis_INITIAL_SUPPLY = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -31,7 +31,7 @@ export const SimpleToken_INITIAL_SUPPLY = async (
 }
 
 //view
-export const SimpleToken_MINTER_ROLE = async (
+export const SimpleTokenAbis_MINTER_ROLE = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -44,7 +44,7 @@ export const SimpleToken_MINTER_ROLE = async (
 }
 
 //view
-export const SimpleToken_PAUSER_ROLE = async (
+export const SimpleTokenAbis_PAUSER_ROLE = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -57,7 +57,7 @@ export const SimpleToken_PAUSER_ROLE = async (
 }
 
 //view
-export const SimpleToken_Allowance = async (
+export const SimpleTokenAbis_Allowance = async (
 	contract: TContract,
 	arg?: {
 		owner: string; //address
@@ -76,7 +76,7 @@ export const SimpleToken_Allowance = async (
 }
 
 //nonpayable
-export const SimpleToken_Approve = async (
+export const SimpleTokenAbis_Approve = async (
 	contract: TContract,
 	arg?: {
 		spender: string; //address
@@ -95,7 +95,7 @@ export const SimpleToken_Approve = async (
 }
 
 //view
-export const SimpleToken_BalanceOf = async (
+export const SimpleTokenAbis_BalanceOf = async (
 	contract: TContract,
 	arg?: {
 		account: string; //address
@@ -113,7 +113,7 @@ export const SimpleToken_BalanceOf = async (
 }
 
 //nonpayable
-export const SimpleToken_Burn = async (
+export const SimpleTokenAbis_Burn = async (
 	contract: TContract,
 	arg?: {
 		amount: string | number; //uint256
@@ -131,7 +131,7 @@ export const SimpleToken_Burn = async (
 }
 
 //nonpayable
-export const SimpleToken_BurnFrom = async (
+export const SimpleTokenAbis_BurnFrom = async (
 	contract: TContract,
 	arg?: {
 		account: string; //address
@@ -150,7 +150,7 @@ export const SimpleToken_BurnFrom = async (
 }
 
 //view
-export const SimpleToken_Decimals = async (
+export const SimpleTokenAbis_Decimals = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -163,7 +163,7 @@ export const SimpleToken_Decimals = async (
 }
 
 //nonpayable
-export const SimpleToken_DecreaseAllowance = async (
+export const SimpleTokenAbis_DecreaseAllowance = async (
 	contract: TContract,
 	arg?: {
 		spender: string; //address
@@ -182,7 +182,7 @@ export const SimpleToken_DecreaseAllowance = async (
 }
 
 //view
-export const SimpleToken_GetRoleAdmin = async (
+export const SimpleTokenAbis_GetRoleAdmin = async (
 	contract: TContract,
 	arg?: {
 		role: string; //bytes32
@@ -200,7 +200,7 @@ export const SimpleToken_GetRoleAdmin = async (
 }
 
 //view
-export const SimpleToken_GetRoleMember = async (
+export const SimpleTokenAbis_GetRoleMember = async (
 	contract: TContract,
 	arg?: {
 		role: string; //bytes32
@@ -219,7 +219,7 @@ export const SimpleToken_GetRoleMember = async (
 }
 
 //view
-export const SimpleToken_GetRoleMemberCount = async (
+export const SimpleTokenAbis_GetRoleMemberCount = async (
 	contract: TContract,
 	arg?: {
 		role: string; //bytes32
@@ -237,7 +237,7 @@ export const SimpleToken_GetRoleMemberCount = async (
 }
 
 //nonpayable
-export const SimpleToken_GrantRole = async (
+export const SimpleTokenAbis_GrantRole = async (
 	contract: TContract,
 	arg?: {
 		role: string; //bytes32
@@ -256,7 +256,7 @@ export const SimpleToken_GrantRole = async (
 }
 
 //view
-export const SimpleToken_HasRole = async (
+export const SimpleTokenAbis_HasRole = async (
 	contract: TContract,
 	arg?: {
 		role: string; //bytes32
@@ -275,7 +275,7 @@ export const SimpleToken_HasRole = async (
 }
 
 //nonpayable
-export const SimpleToken_IncreaseAllowance = async (
+export const SimpleTokenAbis_IncreaseAllowance = async (
 	contract: TContract,
 	arg?: {
 		spender: string; //address
@@ -294,7 +294,7 @@ export const SimpleToken_IncreaseAllowance = async (
 }
 
 //nonpayable
-export const SimpleToken_Mint = async (
+export const SimpleTokenAbis_Mint = async (
 	contract: TContract,
 	arg?: {
 		to: string; //address
@@ -313,7 +313,7 @@ export const SimpleToken_Mint = async (
 }
 
 //view
-export const SimpleToken_Name = async (
+export const SimpleTokenAbis_Name = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -326,7 +326,7 @@ export const SimpleToken_Name = async (
 }
 
 //nonpayable
-export const SimpleToken_Pause = async (
+export const SimpleTokenAbis_Pause = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -339,7 +339,7 @@ export const SimpleToken_Pause = async (
 }
 
 //view
-export const SimpleToken_Paused = async (
+export const SimpleTokenAbis_Paused = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -352,7 +352,7 @@ export const SimpleToken_Paused = async (
 }
 
 //nonpayable
-export const SimpleToken_RenounceRole = async (
+export const SimpleTokenAbis_RenounceRole = async (
 	contract: TContract,
 	arg?: {
 		role: string; //bytes32
@@ -371,7 +371,7 @@ export const SimpleToken_RenounceRole = async (
 }
 
 //nonpayable
-export const SimpleToken_RevokeRole = async (
+export const SimpleTokenAbis_RevokeRole = async (
 	contract: TContract,
 	arg?: {
 		role: string; //bytes32
@@ -390,7 +390,7 @@ export const SimpleToken_RevokeRole = async (
 }
 
 //view
-export const SimpleToken_SupportsInterface = async (
+export const SimpleTokenAbis_SupportsInterface = async (
 	contract: TContract,
 	arg?: {
 		interfaceId: string; //bytes4
@@ -408,11 +408,10 @@ export const SimpleToken_SupportsInterface = async (
 }
 
 //view
-export const SimpleToken_Symbol = async (
+export const SimpleTokenAbis_Symbol = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
-		console.log(contract)
 		let res = await (contract as ethers.Contract).symbol()
 		return convertedBigNumber(res) as string; //string
 	} else {
@@ -422,7 +421,7 @@ export const SimpleToken_Symbol = async (
 }
 
 //view
-export const SimpleToken_TotalSupply = async (
+export const SimpleTokenAbis_TotalSupply = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {
@@ -435,7 +434,7 @@ export const SimpleToken_TotalSupply = async (
 }
 
 //nonpayable
-export const SimpleToken_Transfer = async (
+export const SimpleTokenAbis_Transfer = async (
 	contract: TContract,
 	arg?: {
 		recipient: string; //address
@@ -454,7 +453,7 @@ export const SimpleToken_Transfer = async (
 }
 
 //nonpayable
-export const SimpleToken_TransferFrom = async (
+export const SimpleTokenAbis_TransferFrom = async (
 	contract: TContract,
 	arg?: {
 		sender: string; //address
@@ -474,7 +473,7 @@ export const SimpleToken_TransferFrom = async (
 }
 
 //nonpayable
-export const SimpleToken_Unpause = async (
+export const SimpleTokenAbis_Unpause = async (
 	contract: TContract,
 ) => {
 	if ((contract as any)?.address && !(contract as any)?.methods) {

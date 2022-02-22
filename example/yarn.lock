@@ -2807,10 +2807,10 @@ abab@^2.0.3, abab@^2.0.5:
   resolved "https://registry.npmjs.org/abab/-/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
   integrity sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q==
 
-abi-to-request@^0.0.38:
-  version "0.0.38"
-  resolved "https://registry.npmjs.org/abi-to-request/-/abi-to-request-0.0.38.tgz#b1844add1e904efc6c89c420619866dda1552a5e"
-  integrity sha512-s4XRrNMN5uHfooLfbXus3beE/llaJ+mcQVcBRtF3hulF1RbTg0GPePzp1GS3c4Tu6ukVzFtvyjDqS4q+WXj81g==
+abi-to-request@^0.0.39:
+  version "0.0.39"
+  resolved "https://registry.npmjs.org/abi-to-request/-/abi-to-request-0.0.39.tgz#5184c64a42890da403a5947f50f01a3c8e746d8e"
+  integrity sha512-wgy8qm2A0ymgxbK+w5CycDsieSSYxNvU++8ZP8Z6Cp7tPXz95QoFZhYdfTD3p8dGSDLQXK7jlPh1T++EeeA9AA==
   dependencies:
     "@types/lodash" "^4.14.178"
     "@types/react" "^17.0.39"
