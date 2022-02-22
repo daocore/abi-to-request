@@ -1,6 +1,6 @@
 {
   "name": "abi-to-request",
-  "version": "0.0.37",
+  "version": "0.0.39",
   "description": "Convert smart contract ABI file to react request file",
   "keywords": [
     "contract",
