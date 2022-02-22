@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState, useContext, useEffect, useMemo } from "react";
+import React, { createContext, ReactNode, useState, useContext, useEffect, useMemo } from "react";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { isEmpty, isUndefined } from "lodash";
 import Web3Modal from "web3modal";
@@ -79,7 +79,7 @@ export const useGetWeb3Info = (defaultNetwork?: string) => {
     }
   }, [chainId])
 
-  const network = useMemo(() => !isEmpty(chainData) ? chainData?.network : "mainnet", [chainData]);
+  const network = React.useMemo(() => !isEmpty(chainData) ? chainData?.network : "mainnet", [chainData]);
 
   useEffect(() => {
     const web3Modal = new Web3Modal({

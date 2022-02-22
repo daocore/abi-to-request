@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useEffect } from 'react';
-import { ContractRequestContextProvider } from "abi-to-request"
+import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider } from "abi-to-request"
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 
 const Example = () => {
@@ -10,7 +10,11 @@ const Example = () => {
     console.log(library)
   }, [library]) */
 
+  const { library } = useWeb3Info()
+  console.log(library)
+
   return (
+    <ContractRequestContextProvider library={library}>
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -27,14 +31,15 @@ const Example = () => {
         </a>
       </header>
     </div>
+    </ContractRequestContextProvider>
   );
 }
 
 const App = () => {
   return (
-    <ContractRequestContextProvider library={{} as any}>
+    <Web3InfoProvider>
         <Example />
-    </ContractRequestContextProvider>
+    </Web3InfoProvider>
   );
 }
 
