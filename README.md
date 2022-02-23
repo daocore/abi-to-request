@@ -16,7 +16,7 @@ yarn add abi-to-request
 "abi:api": "converted -d -abis --npm etherjs --entry XXXXXX --chainId XX"
 ```
 
-## 3. Usage
+## 3. Commands Usage
 
 ```
 -h					Help, output command
@@ -31,7 +31,14 @@ yarn add abi-to-request
 --contractName <contractName>		Specify the contract, the default is all
 ```
 
-## 4. Example
+## 4. Hook Usage
+|hook or other| usage  | remarks |
+|---|---|---|
+|useReadContractRequest|XXX|XXX|
+|useRequest|XXX|XXX|
+|ContractRequestContextProvider|XXX|XXX|
+
+## 5. Example
 ```jsx
 import { useState } from 'react';
 import { ethers } from 'ethers';
