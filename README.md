@@ -33,16 +33,22 @@ yarn add abi-to-request
 
 ## 4. Example
 ```jsx
-import './App.css';
 import { useState } from 'react';
-import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useReadContractRequest, useRequest } from "abi-to-request"
-import { Loading, LoadingProvider, useLoading } from './component/Loading';
-import { ContractRequest } from './component/ContractRequest';
-import { ContractCard } from './component/ContractCard';
-import { abis } from "./client/abis"
-import { map } from 'lodash';
-import { SimpleTokenAbis_BalanceOf, SimpleTokenAbis_Decimals, SimpleTokenAbis_Symbol, SimpleTokenAbis_Transfer } from './client/SimpleTokenAbis';
 import { ethers } from 'ethers';
+import { Loading, LoadingProvider, useLoading } from './component/Loading';
+import { 
+    useWeb3Info, 
+    Web3InfoProvider, 
+    ContractRequestContextProvider, 
+    useReadContractRequest, 
+    useRequest 
+} from "abi-to-request"
+import { 
+    SimpleTokenAbis_BalanceOf, 
+    SimpleTokenAbis_Decimals, 
+    SimpleTokenAbis_Symbol, 
+    SimpleTokenAbis_Transfer 
+} from './client/SimpleTokenAbis';
 
 const Request = () => {
   const { connected, address, chainData, killSession, toConnect } = useWeb3Info()
@@ -78,43 +84,43 @@ const Request = () => {
   }, [transferrecipient, transferAmount, symbol, decimals])
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", padding: 30 }}>
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
+    <div>
+      <div>
         {connected
-          ? <div className="fetch-btn" style={{ marginRight: 20 }} onClick={() => { killSession && killSession() }}>{"Disconnect"}</div>
-          : <div className="fetch-btn" style={{ marginRight: 20 }} onClick={() => { toConnect && toConnect() }}>{"Connect"}</div>}
-        {address && <div className="fetch-btn" style={{ marginRight: 20, background: "rgba(0,0,0,0.4)", cursor: "default" }}>{address}</div>}
-        {chainData && <div className="fetch-btn" style={{ marginRight: 20, background: "rgba(0,0,0,0.4)", cursor: "default" }}>{chainData?.title || chainData?.name}</div>}
+          ? <div onClick={() => { killSession && killSession() }}>{"Disconnect"}</div>
+          : <div onClick={() => { toConnect && toConnect() }}>{"Connect"}</div>}
+        <div>{address}</div>
+        <div>{chainData?.title || chainData?.name}</div>
       </div>
-      <br />
-      <br />
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-        <div className="fetch-btn" style={{ marginRight: 20 }} onClick={getDecimals}>{"getDecimals"}</div>
+      <div>
+        <div onClick={getDecimals}>{"getDecimals"}</div>
         <div>{decimals}</div>
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-        <div className="fetch-btn" style={{ marginRight: 20 }} onClick={getSymbol}>{"getSymbol"}</div>
+      <div>
+        <div onClick={getSymbol}>{"getSymbol"}</div>
         <div>{symbol}</div>
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-        <div className="fetch-btn" style={{ marginRight: 20 }} onClick={() => {
+      <div>
+        <div onClick={() => {
           getBalanceOf({ account: getBalanceOfAddress })
         }}>{"getBalanceOf"}</div>
-        <input className="fetch-input" placeholder={"account"} onChange={(e) => { setBalanceOfAddress(e.target.value) }} />
+        <input placeholder={"account"} onChange={(e) => { setBalanceOfAddress(e.target.value) }} />
         {balanceOf && <div>{ethers.utils.formatUnits(balanceOf, decimals || 18)} {symbol}</div>}
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-        <div className="fetch-btn" style={{ marginRight: 20 }} onClick={() => {
+      <div>
+        <div onClick={() => {
           transfer({
             recipient: transferrecipient,
             amount: transferAmount
           })
         }}>{"transfer"}</div>
-        <input className="fetch-input" placeholder={"recipient"} onChange={(e) => { settransferrecipient(e.target.value) }} />
-        <input className="fetch-input" placeholder={"amount"} onChange={(e) => { settransferAmount(ethers.utils.parseEther(e.target.value) as any) }} />
+        <input placeholder={"recipient"} onChange={(e) => { settransferrecipient(e.target.value) }} />
+        <input placeholder={"amount"} onChange={(e) => { 
+            settransferAmount(ethers.utils.parseEther(e.target.value) as any) 
+        }}/>
       </div>
     </div>
   )
