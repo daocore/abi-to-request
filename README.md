@@ -37,9 +37,9 @@ import { useState } from 'react';
 import { ethers } from 'ethers';
 import { Loading, LoadingProvider, useLoading } from './component/Loading';
 import { 
-    useWeb3Info, 
     Web3InfoProvider, 
     ContractRequestContextProvider, 
+    useWeb3Info, 
     useReadContractRequest, 
     useRequest 
 } from "abi-to-request"
@@ -79,9 +79,9 @@ const Request = () => {
     },
     onTransactionSuccess: () => {
       closeDelayLoading()
-      alert(`转账给${transferrecipient} ${ethers.utils.formatUnits(transferAmount, decimals || 18)} ${symbol}成功`)
+      alert(`转账给${transferrecipient} ${transferAmount} ${symbol}成功`)
     }
-  }, [transferrecipient, transferAmount, symbol, decimals])
+  }, [transferrecipient, transferAmount, symbol])
 
   return (
     <div>
@@ -106,8 +106,13 @@ const Request = () => {
         <div onClick={() => {
           getBalanceOf({ account: getBalanceOfAddress })
         }}>{"getBalanceOf"}</div>
-        <input placeholder={"account"} onChange={(e) => { setBalanceOfAddress(e.target.value) }} />
-        {balanceOf && <div>{ethers.utils.formatUnits(balanceOf, decimals || 18)} {symbol}</div>}
+        <input 
+            placeholder={"account"} 
+            onChange={(e) => { setBalanceOfAddress(e.target.value) }} 
+        />
+        <div>
+            {balanceOf ? ethers.utils.formatUnits(balanceOf, decimals || 18) : ""} {symbol}
+        </div>
       </div>
 
       <div>
@@ -117,10 +122,16 @@ const Request = () => {
             amount: transferAmount
           })
         }}>{"transfer"}</div>
-        <input placeholder={"recipient"} onChange={(e) => { settransferrecipient(e.target.value) }} />
-        <input placeholder={"amount"} onChange={(e) => { 
-            settransferAmount(ethers.utils.parseEther(e.target.value) as any) 
-        }}/>
+        <input 
+            placeholder={"recipient"} 
+            onChange={(e) => { settransferrecipient(e.target.value) }} 
+        />
+        <input 
+            placeholder={"amount"} 
+            onChange={(e) => { 
+                settransferAmount(ethers.utils.parseEther(e.target.value) as any) 
+            }}
+        />
       </div>
     </div>
   )
