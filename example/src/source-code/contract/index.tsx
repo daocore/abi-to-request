@@ -47,7 +47,7 @@ export const ContractRequestContextProvider = <T,>({
 }) => {
     const [contracts, setContracts] = useState<{ [key in string]: TContract }>({});
     const [networkId, setNetworkId] = useState<number>();
-    const abisData: TAbiItem[] = useMemo(() => isEmpty(abis) || !abis ? require("./abis") : abis, [abis])
+    const abisData: TAbiItem[] = useMemo(() => isEmpty(abis) || !abis ? require("./abis.js") : abis, [abis])
 
     const getContract = async (library: TLibrary, contractInfo: TAbiItem) => {
         try {

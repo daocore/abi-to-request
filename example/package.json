@@ -77,7 +77,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "abi:api": "converted -d --entry './src/contracts/' --chainId 3 -abis"
+    "abi:api": "cd '../lib' && node converted.js --entry '../example/src/contracts/' --output '../example/src/client' -d -abis"
   },
   "eslintConfig": {
     "extends": [

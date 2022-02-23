@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useRequest, useImmediateReadContractRequest } from "../.."
+import { useWeb3Info, Web3InfoProvider, ContractRequestContextProvider, useRequest, useImmediateReadContractRequest } from "./source-code"
 import { abis } from "./client/abis"
 import { SimpleTokenAbis_BalanceOf, SimpleTokenAbis_Decimals, SimpleTokenAbis_Symbol } from './client/SimpleTokenAbis';
 import { Loading, LoadingProvider, useLoading } from './component/Loading';
@@ -9,7 +9,7 @@ import { ContractCard } from './component/Contract';
 
 const A = () => {
   const { address } = useWeb3Info()
-  const [getBalanceOf, balanceOf] = useRequest(SimpleTokenAbis_BalanceOf)
+  const [getBalanceOf, balanceOf] = useRequest(SimpleTokenAbis_BalanceOf, { arg: { account: "stging" } })
 
   const [symbol] = useImmediateReadContractRequest(SimpleTokenAbis_Symbol)
   const [Decimals] = useImmediateReadContractRequest(SimpleTokenAbis_Decimals)
@@ -77,6 +77,7 @@ const Example = () => {
             {
               <div>{select}</div>
             }
+            <A />
           </div>
         </div>
         <Loading />
