@@ -1,4 +1,4 @@
-import { TAbiItem } from "../../../lib";
+import { TAbiItem } from "../source-code";
 
 export const ellipseAddress = (address = "", width = 8) => `${address.slice(0, width)}...${address.slice(-width)}`;
 

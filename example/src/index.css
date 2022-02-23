@@ -45,9 +45,9 @@ code {
   -webkit-border-radius: 50% 50% 50% 50%;
   border-radius: 50% 50% 50% 50%;
   position: absolute;
-  border-top: 5px solid rgba(255, 255, 255, 0.7);
+  border-top: 5px solid rgba(208, 28, 21, 1);
   border-bottom: 5px solid transparent;
-  border-left:  5px solid rgba(255, 255, 255, 0.7);
+  border-left:  5px solid rgba(208, 28, 21, 1);
   border-right: 5px solid transparent;
   -webkit-animation: animate 2s infinite;
   animation: animate 2s infinite;	
@@ -112,7 +112,7 @@ code {
   position: absolute;
   left: 60%;
   top: 30%;
-  color: rgba(225,225,225, 0.7);
+  color: rgba(208, 28, 21, 1);
   font-size: 30px;
   cursor: pointer;
   z-index: 10000;
@@ -124,7 +124,7 @@ code {
   margin-left: -150px;
   bottom: 50%;
   margin-bottom: -150px;
-  color: rgba(225,225,225, 0.7);
+  color: rgba(208, 28, 21, 1);
   font-size: 20px;
   cursor: pointer;
   z-index: 10000;
@@ -140,4 +140,21 @@ code {
 
 .contract:hover{
   background:  rgba(0,0,0, 0.1);
+}
+
+.fetch-btn{
+  background: rgb(31, 167, 53);
+  padding: 7px;
+  margin-bottom: 5px;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.fetch-input{
+  padding: 7px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  width: 100px;
+  margin-right: 10px;
 }

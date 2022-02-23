@@ -4,14 +4,12 @@ import * as React from "react";
 
 interface ILoading {
   loading?: any;
-  closeLoading?: () => void;
-  openLoading?: () => void;
-  closeDelayLoading?: () => void;
+  closeLoading: () => void;
+  openLoading: () => void;
+  closeDelayLoading: () => void;
 }
 
-const loading: ILoading = {}
-
-export const LoadingContext = React.createContext(loading);
+export const LoadingContext = React.createContext({} as ILoading);
 
 export const useLoading = () => React.useContext(LoadingContext);
 

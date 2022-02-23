@@ -1,8 +1,6 @@
 import { TContract, convertedBigNumber } from "../source-code";
-import { Contract } from 'web3-eth-contract';
-import { TransactionResponse } from "@ethersproject/abstract-provider";
-import { TransactionReceipt } from 'web3-core';
 import { ethers } from "ethers";
+import { TransactionResponse } from "@ethersproject/abstract-provider";
 
 //view
 export const SimpleTokenAbis_DEFAULT_ADMIN_ROLE = async (
@@ -11,9 +9,6 @@ export const SimpleTokenAbis_DEFAULT_ADMIN_ROLE = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).DEFAULT_ADMIN_ROLE()
 		return convertedBigNumber(res) as string; //bytes32
-	} else {
-		let res = await (contract as Contract).methods.DEFAULT_ADMIN_ROLE().call()
-		return res as string; //bytes32
 	}
 }
 
@@ -24,9 +19,6 @@ export const SimpleTokenAbis_INITIAL_SUPPLY = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).INITIAL_SUPPLY()
 		return convertedBigNumber(res) as string; //uint256
-	} else {
-		let res = await (contract as Contract).methods.INITIAL_SUPPLY().call()
-		return res as string; //uint256
 	}
 }
 
@@ -37,9 +29,6 @@ export const SimpleTokenAbis_MINTER_ROLE = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).MINTER_ROLE()
 		return convertedBigNumber(res) as string; //bytes32
-	} else {
-		let res = await (contract as Contract).methods.MINTER_ROLE().call()
-		return res as string; //bytes32
 	}
 }
 
@@ -50,9 +39,6 @@ export const SimpleTokenAbis_PAUSER_ROLE = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).PAUSER_ROLE()
 		return convertedBigNumber(res) as string; //bytes32
-	} else {
-		let res = await (contract as Contract).methods.PAUSER_ROLE().call()
-		return res as string; //bytes32
 	}
 }
 
@@ -69,9 +55,6 @@ export const SimpleTokenAbis_Allowance = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).allowance(owner, spender)
 		return convertedBigNumber(res) as string; //uint256
-	} else {
-		let res = await (contract as Contract).methods.allowance(owner, spender).call()
-		return res as string; //uint256
 	}
 }
 
@@ -87,10 +70,7 @@ export const SimpleTokenAbis_Approve = async (
 	const { spender, amount } = arg;
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).approve(spender, amount)
-		return convertedBigNumber(res) as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.approve(spender, amount).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
+		return res as TransactionResponse
 	}
 }
 
@@ -106,9 +86,6 @@ export const SimpleTokenAbis_BalanceOf = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).balanceOf(account)
 		return convertedBigNumber(res) as string; //uint256
-	} else {
-		let res = await (contract as Contract).methods.balanceOf(account).call()
-		return res as string; //uint256
 	}
 }
 
@@ -124,9 +101,6 @@ export const SimpleTokenAbis_Burn = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).burn(amount)
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.burn(amount).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }
 
@@ -143,9 +117,6 @@ export const SimpleTokenAbis_BurnFrom = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).burnFrom(account, amount)
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.burnFrom(account, amount).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }
 
@@ -156,9 +127,6 @@ export const SimpleTokenAbis_Decimals = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).decimals()
 		return convertedBigNumber(res) as string; //uint8
-	} else {
-		let res = await (contract as Contract).methods.decimals().call()
-		return res as string; //uint8
 	}
 }
 
@@ -174,10 +142,7 @@ export const SimpleTokenAbis_DecreaseAllowance = async (
 	const { spender, subtractedValue } = arg;
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).decreaseAllowance(spender, subtractedValue)
-		return convertedBigNumber(res) as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.decreaseAllowance(spender, subtractedValue).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
+		return res as TransactionResponse
 	}
 }
 
@@ -193,9 +158,6 @@ export const SimpleTokenAbis_GetRoleAdmin = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).getRoleAdmin(role)
 		return convertedBigNumber(res) as string; //bytes32
-	} else {
-		let res = await (contract as Contract).methods.getRoleAdmin(role).call()
-		return res as string; //bytes32
 	}
 }
 
@@ -212,9 +174,6 @@ export const SimpleTokenAbis_GetRoleMember = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).getRoleMember(role, index)
 		return convertedBigNumber(res) as string; //address
-	} else {
-		let res = await (contract as Contract).methods.getRoleMember(role, index).call()
-		return res as string; //address
 	}
 }
 
@@ -230,9 +189,6 @@ export const SimpleTokenAbis_GetRoleMemberCount = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).getRoleMemberCount(role)
 		return convertedBigNumber(res) as string; //uint256
-	} else {
-		let res = await (contract as Contract).methods.getRoleMemberCount(role).call()
-		return res as string; //uint256
 	}
 }
 
@@ -249,9 +205,6 @@ export const SimpleTokenAbis_GrantRole = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).grantRole(role, account)
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.grantRole(role, account).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }
 
@@ -268,9 +221,6 @@ export const SimpleTokenAbis_HasRole = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).hasRole(role, account)
 		return convertedBigNumber(res) as string; //bool
-	} else {
-		let res = await (contract as Contract).methods.hasRole(role, account).call()
-		return res as string; //bool
 	}
 }
 
@@ -286,10 +236,7 @@ export const SimpleTokenAbis_IncreaseAllowance = async (
 	const { spender, addedValue } = arg;
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).increaseAllowance(spender, addedValue)
-		return convertedBigNumber(res) as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.increaseAllowance(spender, addedValue).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
+		return res as TransactionResponse
 	}
 }
 
@@ -306,9 +253,6 @@ export const SimpleTokenAbis_Mint = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).mint(to, amount)
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.mint(to, amount).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }
 
@@ -319,9 +263,6 @@ export const SimpleTokenAbis_Name = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).name()
 		return convertedBigNumber(res) as string; //string
-	} else {
-		let res = await (contract as Contract).methods.name().call()
-		return res as string; //string
 	}
 }
 
@@ -332,9 +273,6 @@ export const SimpleTokenAbis_Pause = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).pause()
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.pause().send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }
 
@@ -345,9 +283,6 @@ export const SimpleTokenAbis_Paused = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).paused()
 		return convertedBigNumber(res) as string; //bool
-	} else {
-		let res = await (contract as Contract).methods.paused().call()
-		return res as string; //bool
 	}
 }
 
@@ -364,9 +299,6 @@ export const SimpleTokenAbis_RenounceRole = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).renounceRole(role, account)
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.renounceRole(role, account).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }
 
@@ -383,9 +315,6 @@ export const SimpleTokenAbis_RevokeRole = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).revokeRole(role, account)
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.revokeRole(role, account).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }
 
@@ -401,9 +330,6 @@ export const SimpleTokenAbis_SupportsInterface = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).supportsInterface(interfaceId)
 		return convertedBigNumber(res) as string; //bool
-	} else {
-		let res = await (contract as Contract).methods.supportsInterface(interfaceId).call()
-		return res as string; //bool
 	}
 }
 
@@ -414,9 +340,6 @@ export const SimpleTokenAbis_Symbol = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).symbol()
 		return convertedBigNumber(res) as string; //string
-	} else {
-		let res = await (contract as Contract).methods.symbol().call()
-		return res as string; //string
 	}
 }
 
@@ -427,9 +350,6 @@ export const SimpleTokenAbis_TotalSupply = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).totalSupply()
 		return convertedBigNumber(res) as string; //uint256
-	} else {
-		let res = await (contract as Contract).methods.totalSupply().call()
-		return res as string; //uint256
 	}
 }
 
@@ -445,10 +365,7 @@ export const SimpleTokenAbis_Transfer = async (
 	const { recipient, amount } = arg;
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).transfer(recipient, amount)
-		return convertedBigNumber(res) as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.transfer(recipient, amount).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
+		return res as TransactionResponse
 	}
 }
 
@@ -465,10 +382,7 @@ export const SimpleTokenAbis_TransferFrom = async (
 	const { sender, recipient, amount } = arg;
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).transferFrom(sender, recipient, amount)
-		return convertedBigNumber(res) as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.transferFrom(sender, recipient, amount).send({ from: contract.sendAccount })
-		return res as TransactionReceipt
+		return res as TransactionResponse
 	}
 }
 
@@ -479,8 +393,5 @@ export const SimpleTokenAbis_Unpause = async (
 	if ((contract as any)?.address && !(contract as any)?.methods) {
 		let res = await (contract as ethers.Contract).unpause()
 		return res as TransactionResponse
-	} else {
-		let res = await (contract as Contract).methods.unpause().send({ from: contract.sendAccount })
-		return res as TransactionReceipt
 	}
 }

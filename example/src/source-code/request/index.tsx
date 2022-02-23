@@ -121,7 +121,7 @@ export const useRequest = <T, K>(
 }
 
 // 侧重于获取值，故返回值在前（该hook仅用于直接获取合约的值，无法写入数据） 默认不执行全局钩子
-export const useImmediateReadContractRequest = <T, K>(
+export const useReadContractRequest = <T, K>(
   fetch: IFetch<K, T>,
   option: IHandleRequest<K> & { arg?: T } = {},
   rely: any[] = []
@@ -146,7 +146,7 @@ export const useImmediateReadContractRequest = <T, K>(
   useEffect(() => {
     if (!contract) return;
     getFun()
-  }, [contract])
+  }, [contract, ...rely])
 
   const getFun = useCallback(async (params?: T) => {
     return await getData({ ...(option?.arg ? option?.arg : {}), ...(params ? params : {}) } as any)
