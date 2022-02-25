@@ -13,7 +13,7 @@ yarn add abi-to-request
 在package.json的scripts中添加
 
 ```
-"abi:api": "converted -d -abis --npm etherjs --entry XXXXXX --chainId XX"
+"abi:api": "converted -d --npm etherjs --entry XXXXXX --chainId XX"
 ```
 
 ## 3. Commands Usage
@@ -41,11 +41,8 @@ yarn add abi-to-request
 ```tsx
 import { useState } from 'react';
 import { ethers } from 'ethers';
-import { Loading, LoadingProvider, useLoading } from './component/Loading';
-import { 
-    Web3InfoProvider, 
+import {
     ContractRequestContextProvider, 
-    useWeb3Info, 
     useReadContractRequest, 
     useRequest 
 } from "abi-to-request"
@@ -57,22 +54,16 @@ import {
 } from './client/SimpleTokenAbis';
 
 const Request = () => {
-  const { connected, address, chainData, killSession, toConnect } = useWeb3Info()
-  const { openLoading, closeDelayLoading } = useLoading()
+  const [decimals] = useReadContractRequest(SimpleTokenAbis_Decimals)
+  const [symbol] = useReadContractRequest(SimpleTokenAbis_Symbol)
 
-  const [decimals, getDecimals] = useReadContractRequest(SimpleTokenAbis_Decimals, {
+  const [getBalanceOfAddress, setBalanceOfAddress] = useState("")
+  const [balanceOf, getBalanceOf] = useReadContractRequest(SimpleTokenAbis_BalanceOf, {
+    arg: address ? { account: address } : undefined,
+    isGlobalTransactionHookValid: true,
     onSuccess: (res) => {
       // do something
     }
-  })
-
-  const [symbol, getSymbol] = useReadContractRequest(SimpleTokenAbis_Symbol)
-
-  const [getBalanceOfAddress, setBalanceOfAddress] = useState("")
-
-  const [balanceOf, getBalanceOf] = useReadContractRequest(SimpleTokenAbis_BalanceOf, {
-    arg: address ? { account: address } : undefined,
-    isGlobalTransactionHookValid: true
   }, [address])
 
   const [transferrecipient, settransferrecipient] = useState("")
@@ -81,10 +72,10 @@ const Request = () => {
   const [transfer] = useRequest(SimpleTokenAbis_Transfer, {
     isGlobalTransactionHookValid: false,
     onSuccessBefore: () => {
-      openLoading()
+      // openLoading()
     },
     onTransactionSuccess: () => {
-      closeDelayLoading()
+      // closeDelayLoading()
       alert(`转账给${transferrecipient} ${transferAmount} ${symbol}成功`)
     }
   }, [transferrecipient, transferAmount, symbol])
@@ -92,26 +83,17 @@ const Request = () => {
   return (
     <div>
       <div>
-        {connected
-          ? <div onClick={() => { killSession && killSession() }}>{"Disconnect"}</div>
-          : <div onClick={() => { toConnect && toConnect() }}>{"Connect"}</div>}
-        <div>{address}</div>
-        <div>{chainData?.title || chainData?.name}</div>
-      </div>
-      <div>
-        <div onClick={getDecimals}>{"getDecimals"}</div>
         <div>{decimals}</div>
       </div>
 
       <div>
-        <div onClick={getSymbol}>{"getSymbol"}</div>
         <div>{symbol}</div>
       </div>
 
       <div>
         <div onClick={() => {
           getBalanceOf({ account: getBalanceOfAddress })
-        }}>{"getBalanceOf"}</div>
+        }}>getBalanceOf</div>
         <input 
             placeholder={"account"} 
             onChange={(e) => { setBalanceOfAddress(e.target.value) }} 
@@ -127,7 +109,18 @@ const Request = () => {
             recipient: transferrecipient,
             amount: transferAmount
           })
-        }}>{"transfer"}</div>
+
+          //or 
+
+          transfer({
+            recipient: transferrecipient,
+            amount: transferAmount
+          }).then(res=>{
+            if(res.retureValue){
+              // something
+            }
+          })
+        }}>transfer</div>
         <input 
             placeholder={"recipient"} 
             onChange={(e) => { settransferrecipient(e.target.value) }} 
@@ -143,38 +136,22 @@ const Request = () => {
   )
 }
 
-const Example = () => {
-  const web3Info = useWeb3Info()
-  const { openLoading, closeDelayLoading } = useLoading()
-
+const App = () => {
   return (
     <ContractRequestContextProvider
       library={web3Info.library}
       abis={abis}
       transactionHook={{
         onSuccessBefore: () => {
-          openLoading()
+          // openLoading() something
         },
         onFinish: () => {
-          closeDelayLoading()
+          // closeDelayLoading() something
         }
       }}
     >
-      <div>
-        <Request />
-        <Loading />
-      </div >
+      <Request />
     </ContractRequestContextProvider >
-  );
-}
-
-const App = () => {
-  return (
-    <Web3InfoProvider defaultNetwork={"ropsten"}>
-      <LoadingProvider>
-        <Example />
-      </LoadingProvider>
-    </Web3InfoProvider>
   );
 }
 
