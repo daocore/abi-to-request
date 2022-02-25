@@ -42,12 +42,12 @@ export const ContractRequestContextProvider = <T,>({
 }: {
     children: ReactNode,
     library: Web3 | ethers.providers.JsonRpcProvider | ethers.providers.Web3Provider | ethers.providers.InfuraProvider | undefined,
-    abis?: TAbiItem[],
+    abis: TAbiItem[],
     transactionHook?: Omit<IHandleRequest<T>, "isGlobalTransactionHookValid">
 }) => {
     const [contracts, setContracts] = useState<{ [key in string]: TContract }>({});
     const [networkId, setNetworkId] = useState<number>();
-    const abisData: TAbiItem[] = useMemo(() => isEmpty(abis) || !abis ? require("./abis.js") : abis, [abis])
+    //const abisData: TAbiItem[] = useMemo(() => isEmpty(abis) || !abis ? require("./abis.js") : abis, [abis])
 
     const getContract = async (library: TLibrary, contractInfo: TAbiItem) => {
         try {
@@ -120,10 +120,10 @@ export const ContractRequestContextProvider = <T,>({
     }, [library])
 
     useEffect(() => {
-        if (!library || isEmpty(abisData) || !networkId) return
-        const abisFilter = filter(abisData, item => Number(item.chainId || item.networkId) === Number(networkId))
+        if (!library || isEmpty(abis) || !networkId) return
+        const abisFilter = filter(abis, item => Number(item.chainId || item.networkId) === Number(networkId))
         getContracts(library, abisFilter)
-    }, [library, abisData, networkId])
+    }, [library, abis, networkId])
 
     return (
         <ContractRequestContext.Provider value={{ contracts, setContracts, transactionHook }}>

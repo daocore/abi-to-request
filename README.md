@@ -22,7 +22,6 @@ yarn add abi-to-request
 -h					Help, output command
 -d					Delete the client file before each execution
 -js					The output is a file in javascript language
--abis					Export the abis file, you don't need to generate it again after ·npm install· is complete, default no export
 -bigNumber				If select etherjs, number outputs a BigNumber type, default It outputs a string
 --npm <entry file path>			Which npm package to use to interact with the blockchain. value: web3js/etherjs
 --entry <entry file path>		Abi json file entry path, If it is a folder, output all files, if it is a file, only output the file
@@ -39,7 +38,7 @@ yarn add abi-to-request
 |ContractRequestContextProvider|XXX|XXX|
 
 ## 5. Example
-```jsx
+```tsx
 import { useState } from 'react';
 import { ethers } from 'ethers';
 import { Loading, LoadingProvider, useLoading } from './component/Loading';

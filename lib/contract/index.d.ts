@@ -34,7 +34,7 @@ export declare type TAbisData = {
 export declare const ContractRequestContextProvider: <T>({ children, library, abis, transactionHook }: {
     children: ReactNode;
     library: Web3 | ethers.providers.JsonRpcProvider | ethers.providers.Web3Provider | ethers.providers.InfuraProvider | undefined;
-    abis?: TAbiItem[];
+    abis: TAbiItem[];
     transactionHook?: Omit<IHandleRequest<T>, "isGlobalTransactionHookValid">;
 }) => JSX.Element;
 export {};

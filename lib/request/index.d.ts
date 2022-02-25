@@ -23,7 +23,7 @@ export declare const useRequest: <T, K>(fetch: IFetch<K, T>, option?: IHandleReq
     failError: any;
     successValue?: undefined;
 }>, K];
-export declare const useImmediateReadContractRequest: <T, K>(fetch: IFetch<K, T>, option?: IHandleRequest<K> & {
+export declare const useReadContractRequest: <T, K>(fetch: IFetch<K, T>, option?: IHandleRequest<K> & {
     arg?: T;
 }, rely?: any[]) => readonly [K, (params?: T) => Promise<{
     successValue: Awaited<K>;
