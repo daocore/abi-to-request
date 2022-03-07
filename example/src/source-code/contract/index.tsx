@@ -121,7 +121,7 @@ export const ContractRequestContextProvider = <T,>({
 
     useEffect(() => {
         if (!library || isEmpty(abis) || !networkId) return
-        const abisFilter = filter(abis, item => Number(item.chainId || item.networkId) === Number(networkId))
+        const abisFilter = filter(abis, item => Number(item.chainId) === Number(networkId) || Number(item.networkId) === Number(networkId))
         getContracts(library, abisFilter)
     }, [library, abis, networkId])
 

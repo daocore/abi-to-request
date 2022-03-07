@@ -12,7 +12,6 @@ interface IWeb3InfoProps {
   connected?: boolean;
   address?: string;
   chainId?: number;
-  web3?: Web3;
   library?: TLibrary;
   networkId?: number,
   web3Modal?: Web3Modal,
@@ -24,7 +23,6 @@ interface IWeb3InfoProps {
 
 const INITIAL_STATE: IWeb3InfoProps = {
   address: "",
-  web3: undefined,
   library: undefined,
   connected: false,
   chainId: 1,
@@ -40,7 +38,7 @@ const getProviderOptions = () => {
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: "96f99379cbad4a22a3904f9082b58792"
+        infuraId: "3d15546883e14adea6a2696c72331e2e"
       }
     }
   };
@@ -52,7 +50,6 @@ export const useGetWeb3Info = (defaultNetwork?: string) => {
     connected,
     address,
     chainId,
-    web3,
     library,
     networkId,
     web3Modal,
@@ -145,7 +142,7 @@ export const useGetWeb3Info = (defaultNetwork?: string) => {
     setWeb3Info((pre) => ({
       ...pre,
       library,
-      connected: true,
+      connected: isUndefined(defaultProvider),
       address,
       chainId,
       networkId: chainId,
@@ -160,7 +157,6 @@ export const useGetWeb3Info = (defaultNetwork?: string) => {
     library,
     killSession: resetApp,
     toConnect,
-    web3,
     networkId,
     chainData,
     balance
