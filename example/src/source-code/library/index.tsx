@@ -38,7 +38,7 @@ const getProviderOptions = () => {
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: "3d15546883e14adea6a2696c72331e2e"
+        infuraId: "92bfa36874804eaf8e301cf9ea628a7e"
       }
     }
   };
@@ -65,7 +65,7 @@ export const useGetWeb3Info = (defaultNetwork?: string) => {
       await web3Modal?.clearCachedProvider();
       setWeb3Info((pre) => ({ ...pre, ...INITIAL_STATE }));
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
   };
 
@@ -99,15 +99,12 @@ export const useGetWeb3Info = (defaultNetwork?: string) => {
 
   const subscribeProvider = async (provider: any) => {
     if (!provider.on) return;
-    provider.on("close", () => resetApp());
+    provider.on("disconnect", () => resetApp());
     provider.on("accountsChanged", async (accounts: string[]) => {
       await setWeb3Info((pre) => ({ ...pre, address: accounts[0] }));
     });
     provider.on("chainChanged", async (chainId: string) => {
-      await setWeb3Info((pre) => ({ ...pre, chainId: parseInt(chainId) }))
-    });
-    provider.on("networkChanged", async (networkId: string) => {
-      await setWeb3Info((pre) => ({ ...pre, networkId: parseInt(networkId) }));
+      await setWeb3Info((pre) => ({ ...pre, chainId: parseInt(chainId), networkId: parseInt(chainId) }))
     });
   };
 

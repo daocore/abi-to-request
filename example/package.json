@@ -79,9 +79,9 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && cd ./build && http-server",
     "test": "node scripts/test.js",
-    "abi:api": "cd '../lib' && node converted.js -d -abis --npm etherjs --entry '../example/src/contracts/' --output '../example/src/client'"
+    "abi:api": "cd '../lib' && node converted.js -d -abis --entry '../example/src/contracts/' --output '../example/src/client'"
   },
   "eslintConfig": {
     "extends": [

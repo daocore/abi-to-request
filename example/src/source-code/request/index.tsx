@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { TransactionResponse, TransactionReceipt } from "@ethersproject/abstract-provider";
 import { TransactionReceipt as Web3TransactionReceipt } from 'web3-core';
-import { lowerFirst } from "lodash";
 import { TContract, useContractRequest } from "../contract";
 
 /**
@@ -32,7 +31,11 @@ export interface IHandleRequest<K> {
   isGlobalTransactionHookValid?: boolean
 }
 
-export type IFetch<K, T> = (contract: TContract, arg?: T) => Promise<K>
+export type IFetch<K, T> = {
+  name: string;
+  contract: string;
+  fun: (contract: TContract, arg?: T) => Promise<K>
+}
 
 // 如果有全局钩子，那么单个请求相应的钩子函数会覆盖全局的钩子函数。如果希望全局的也有效，则需要设置isGlobalTransactionHookValid为true
 const handleTransactionHook = <K,>(handle: any, globalHandle: any, arg: THandleHookArg<K>, isGlobalTransactionHookValid?: boolean) => {
@@ -59,14 +62,12 @@ const useRequestContract = <T, K>(
 
   return useCallback(async (arg?: T) => {
     if (!contracts) return
-    const contractName = fetch.name.split("_")[0]
-    const functionName = lowerFirst(fetch.name.split("_")[1])
-    const contract = contracts[contractName];
+    const contract = contracts[fetch?.contract];
     if (!contract) return
-    const name = { functionName, contractName }
+    const name = { functionName: fetch?.name, contractName: fetch?.contract }
     try {
       handleTransactionHook(onSuccessBefore, transactionHook?.onSuccessBefore, name, isValid)
-      const res = await fetch(contract, arg)
+      const res = await fetch?.fun(contract, arg)
       if ((res as unknown as TransactionResponse)?.wait) {
         (res as unknown as TransactionResponse)?.wait().then((receipt: TransactionReceipt) => {
           handleTransactionHook(onTransactionSuccess, transactionHook?.onTransactionSuccess, { ...name, data: receipt }, isValid)
@@ -110,8 +111,7 @@ export const useRequest = <T, K>(
     },
     rely
   )
-  const contractName = fetch.name.split("_")[0];
-  const contract = contracts && contracts[contractName] ? contracts[contractName] : undefined;
+  const contract = contracts && contracts[fetch?.contract] ? contracts[fetch?.contract] : undefined;
 
   const writeFun = useCallback(async (params?: T) => {
     return await setFun({ ...(option?.arg ? option?.arg : {}), ...(params ? params : {}) } as any)
@@ -140,8 +140,7 @@ export const useReadContractRequest = <T, K>(
       },
     },
   )
-  const contractName = fetch.name.split("_")[0];
-  const contract = contracts && contracts[contractName] ? contracts[contractName] : undefined;
+  const contract = contracts && contracts[fetch?.contract] ? contracts[fetch?.contract] : undefined;
 
   useEffect(() => {
     if (!contract) return;

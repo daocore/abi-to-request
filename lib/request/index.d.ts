@@ -13,7 +13,11 @@ export interface IHandleRequest<K> {
     onFinish?: (arg?: THandleHookArg<any>) => void;
     isGlobalTransactionHookValid?: boolean;
 }
-export declare type IFetch<K, T> = (contract: TContract, arg?: T) => Promise<K>;
+export declare type IFetch<K, T> = {
+    name: string;
+    contract: string;
+    fun: (contract: TContract, arg?: T) => Promise<K>;
+};
 export declare const useRequest: <T, K>(fetch: IFetch<K, T>, option?: IHandleRequest<K> & {
     arg?: T;
 }, rely?: any[]) => readonly [(params?: T) => Promise<{

@@ -6,7 +6,7 @@ import { ContractRequest } from './component/ContractRequest';
 import { ContractCard } from './component/ContractCard';
 import { abis } from "./client/abis"
 import { map } from 'lodash';
-import { SimpleTokenAbis_BalanceOf, SimpleTokenAbis_Decimals, SimpleTokenAbis_Symbol, SimpleTokenAbis_Transfer } from './client/SimpleTokenAbis';
+import { balanceOf, decimals, symbol, transfer } from './client/SimpleTokenAbis';
 import { ethers } from 'ethers';
 
 const AbiTpHTML = () => {
@@ -66,17 +66,17 @@ const Request = () => {
   const { connected, address, chainData, killSession, toConnect } = useWeb3Info()
   const { openLoading, closeDelayLoading } = useLoading()
 
-  const [decimals, getDecimals] = useReadContractRequest(SimpleTokenAbis_Decimals, {
+  const [decimal, getDecimals] = useReadContractRequest(decimals, {
     onSuccess: (res) => {
       // do something
     }
   })
 
-  const [symbol, getSymbol] = useReadContractRequest(SimpleTokenAbis_Symbol)
+  const [symbols, getSymbol] = useReadContractRequest(symbol)
 
   const [getBalanceOfAddress, setBalanceOfAddress] = useState("")
 
-  const [balanceOf, getBalanceOf] = useReadContractRequest(SimpleTokenAbis_BalanceOf, {
+  const [balanceOfs, getBalanceOf] = useReadContractRequest(balanceOf, {
     arg: address ? { account: address } : undefined,
     isGlobalTransactionHookValid: true
   }, [address])
@@ -84,16 +84,16 @@ const Request = () => {
   const [transferrecipient, settransferrecipient] = useState("")
   const [transferAmount, settransferAmount] = useState("")
 
-  const [transfer] = useRequest(SimpleTokenAbis_Transfer, {
+  const [transfers] = useRequest(transfer, {
     isGlobalTransactionHookValid: false,
     onSuccessBefore: () => {
       openLoading()
     },
     onTransactionSuccess: () => {
       closeDelayLoading()
-      alert(`转账给${transferrecipient} ${ethers.utils.formatUnits(transferAmount, decimals || 18)} ${symbol}成功`)
+      alert(`转账给${transferrecipient} ${ethers.utils.formatUnits(transferAmount, decimal || 18)} ${symbol}成功`)
     }
-  }, [transferrecipient, transferAmount, symbol, decimals])
+  }, [transferrecipient, transferAmount, symbol, decimal])
 
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: 30 }}>
@@ -108,12 +108,12 @@ const Request = () => {
       <br />
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
         <div className="fetch-btn" style={{ marginRight: 20 }} onClick={getDecimals}>{"getDecimals"}</div>
-        <div>{decimals}</div>
+        <div>{decimal}</div>
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
         <div className="fetch-btn" style={{ marginRight: 20 }} onClick={getSymbol}>{"getSymbol"}</div>
-        <div>{symbol}</div>
+        <div>{symbols}</div>
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
@@ -121,12 +121,12 @@ const Request = () => {
           getBalanceOf({ account: getBalanceOfAddress })
         }}>{"getBalanceOf"}</div>
         <input className="fetch-input" placeholder={"account"} onChange={(e) => { setBalanceOfAddress(e.target.value) }} />
-        {balanceOf && <div>{ethers.utils.formatUnits(balanceOf, decimals || 18)} {symbol}</div>}
+        {balanceOfs && <div>{ethers.utils.formatUnits(balanceOfs, decimal || 18)} {symbols}</div>}
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
         <div className="fetch-btn" style={{ marginRight: 20 }} onClick={() => {
-          transfer({
+          transfers({
             recipient: transferrecipient,
             amount: transferAmount
           })
