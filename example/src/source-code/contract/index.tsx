@@ -49,10 +49,10 @@ export const ContractRequestContextProvider = <T,>({
     const [networkId, setNetworkId] = useState<number>();
     //const abisData: TAbiItem[] = useMemo(() => isEmpty(abis) || !abis ? require("./abis.js") : abis, [abis])
 
-    const getContract = async (library: TLibrary, contractInfo: TAbiItem) => {
+    const getContract = async (library: any, contractInfo: TAbiItem) => {
         try {
             if (contractInfo && contractInfo.address) {
-                if (library instanceof Web3) {
+                if ((library as any)?.eth) {
                     const contract = new library.eth.Contract(
                         contractInfo && contractInfo.abi as unknown as AbiItem[],
                         contractInfo && contractInfo.address
@@ -103,16 +103,18 @@ export const ContractRequestContextProvider = <T,>({
 
     useEffect(() => {
         if (!library) return
-        if (library instanceof Web3 && library?.currentProvider) {
-            subscribeProvider(library?.currentProvider)
+        const lib = library as any;
+        const isWeb3 = lib?.eth && lib?.bzz
+        if (isWeb3 && lib?.currentProvider) {
+            subscribeProvider(lib?.currentProvider)
         }
 
-        if (library instanceof Web3) {
-            library?.eth.getChainId().then(chainId => {
+        if (isWeb3) {
+            lib?.eth.getChainId().then((chainId: string) => {
                 setNetworkId(parseInt(`${chainId}`))
             })
         } else {
-            library?.getNetwork().then(net => {
+            lib?.getNetwork().then((net: any) => {
                 const chainId = net?.chainId;
                 setNetworkId(parseInt(`${chainId}`))
             })
