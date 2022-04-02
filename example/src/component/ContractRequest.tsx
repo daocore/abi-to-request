@@ -1,7 +1,7 @@
 import { map, upperFirst } from "lodash";
 import { useEffect, useState } from "react";
 import { AbiItem } from 'web3-utils';
-import { TAbiItem, useReadContractRequest } from "../source-code";
+import { TAbiItem } from "../source-code";
 
 export const ellipseAddress = (address = "", width = 8) => `${address.slice(0, width)}...${address.slice(-width)}`;
 

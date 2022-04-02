@@ -9,7 +9,7 @@ import { map } from 'lodash';
 import { balanceOf, decimals, symbol, transfer } from './client/SimpleTokenAbis';
 import { ethers } from 'ethers';
 
-const AbiTpHTML = () => {
+export const AbiTpHTML = () => {
   const web3Info = useWeb3Info()
   const { openLoading, closeDelayLoading } = useLoading()
   const [select, setSelect] = useState(Number(window.location.hash.slice(1, window.location.hash.length)) || 0)
@@ -165,7 +165,7 @@ const Example = () => {
 
 const App = () => {
   return (
-    <Web3InfoProvider defaultNetwork={"ropsten"}>
+    <Web3InfoProvider>
       <LoadingProvider>
         <Example />
       </LoadingProvider>

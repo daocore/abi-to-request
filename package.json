@@ -1,6 +1,6 @@
 {
   "name": "abi-to-request",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Convert smart contract ABI file to react request file",
   "keywords": [
     "contract",
@@ -15,10 +15,10 @@
     "email": "qianduanxinlv@163.com"
   },
   "repository": {
-    "url": "git@github.com:SatoshiHsiang/abi-to-request.git",
+    "url": "git@github.com:daocore/abi-to-request.git",
     "type": "git"
   },
-  "homepage": "https://github.com/SatoshiHsiang/abi-to-request",
+  "homepage": "https://github.com/daocore/abi-to-request",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -30,7 +30,8 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "push": "git add . && git commit -m '人生何曾驻旧足，前端处处是新旅' && git push"
   },
   "dependencies": {
     "@types/lodash": "^4.14.178",

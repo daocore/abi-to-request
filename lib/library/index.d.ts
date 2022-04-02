@@ -16,19 +16,18 @@ interface IWeb3InfoProps {
     toConnect?: () => void;
 }
 export declare const useWeb3Info: () => IWeb3InfoProps;
-export declare const useGetWeb3Info: (defaultNetwork?: string) => {
+export declare const useGetWeb3Info: () => {
     connected: boolean;
     address: string;
     chainId: number;
     library: TLibrary;
     killSession: () => Promise<void>;
-    toConnect: (defaultProvider?: boolean) => Promise<void>;
+    toConnect: () => Promise<void>;
     networkId: number;
     chainData: IChainData;
     balance: string;
 };
-export declare const Web3InfoProvider: ({ children, defaultNetwork }: {
+export declare const Web3InfoProvider: ({ children }: {
     children: ReactNode;
-    defaultNetwork?: string;
 }) => JSX.Element;
 export {};
