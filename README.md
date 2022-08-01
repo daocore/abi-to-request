@@ -37,7 +37,7 @@ yarn add abi-to-request
 |useRequest|XXX|XXX|
 |ContractRequestContextProvider|XXX|XXX|
 
-## 5. Example
+<!-- ## 5. Example
 ```tsx
 import { useState } from 'react';
 import { ethers } from 'ethers';
@@ -158,3 +158,4 @@ const App = () => {
 export default App;
 
 ```
+ -->
