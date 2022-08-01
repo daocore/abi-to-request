@@ -41,7 +41,7 @@ export const ContractRequestContextProvider = <T,>({
     transactionHook
 }: {
     children: ReactNode,
-    library: Web3 | ethers.providers.JsonRpcProvider | ethers.providers.Web3Provider | ethers.providers.InfuraProvider | undefined,
+    library: TLibrary,
     abis: TAbiItem[],
     transactionHook?: Omit<IHandleRequest<T>, "isGlobalTransactionHookValid">
 }) => {
@@ -79,8 +79,8 @@ export const ContractRequestContextProvider = <T,>({
     const getContracts = async (library: TLibrary, abisFilter: TAbiItem[]) => {
         const contracts: { [key in string]: TContract } = {};
         let sendAccounts: string[] = []
-        if (library instanceof Web3) {
-            sendAccounts = await library?.eth.getAccounts()
+        if ((library as any)?.eth) {
+            sendAccounts = await (library as any)?.eth.getAccounts()
         }
 
         for (let i = 0; i < abisFilter.length; i++) {

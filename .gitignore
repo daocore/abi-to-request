@@ -5,3 +5,9 @@ node_modules
 dist
 *.js.map
 !chainList.js
+
+/debank.js
+/debank.json
+/name.txt
+/web3_id_data.json
+/web3_id.json
